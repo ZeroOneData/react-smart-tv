@@ -1,52 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import DEMO_LOGO from '../../static/demo_1.jpg'
+import ImageDetailDialog from '../utilities/Dialogs/ImageDetailDialog';
 
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
+    width: 280,
+    height: 250
   },
   media: {
-    height: 140,
+    height: 250
   },
 });
 
-export default function MediaCard(props) {
+export default function MediaCard({image, handleClose}) {
   const classes = useStyles();
+  
+  const [openImageDialog, setOpenImageDialog] = useState(false
+    )
+
+    function handleClose () {
+      setOpenImageDialog(false)
+    }
 
   return (
     <Card className={classes.root}>
-      <CardActionArea>
+      <CardActionArea onClick={() => setOpenImageDialog(true)}>
         <CardMedia
           className={classes.media}
-          image={props.user.urls.regular}
+          image={image.urls.regular}
           title="Contemplative Reptile"
         />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
-          </Typography>
-        </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions>
+      <ImageDetailDialog 
+        image = {image} 
+        openImageDialog={openImageDialog}
+        handleClose={handleClose} />
     </Card>
   );
 }

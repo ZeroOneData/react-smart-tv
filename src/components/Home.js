@@ -8,6 +8,7 @@ import CircularIndeterminate from './utilities/CircularInIndeterminate';
 import GetErrorDialog from './utilities/Dialogs/GetErrorDialog';
 import ROOT_URL from './utilities/ROOT_URL';
 import { useLocation, useParams } from 'react-router-dom';
+import SmartCarousel from './images/SmartCarousel';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 function Home(props) {
     // const location = useLocation()
     // const { topicInstance } = location.state
-    const [users, setUsers] = useState([]);
+    const [images, setImages] = useState([]);
     const [error, setError] = useState(null);
     const [errorCode, setErrorCode] = useState(null);
     const [isLoading, setIsLoading] = useState(true)
@@ -54,8 +55,7 @@ function Home(props) {
         })
         .then(data => {
             console.log(data)
-            setUsers(data)
-            console.log(users)
+            setImages(data)
             setIsLoading(false)
             setError(null)
             setErrorCode(null)
@@ -74,25 +74,18 @@ function Home(props) {
                             <CircularIndeterminate />
                         </Container>:
                 <Container>
-                    <Toolbar >
+                    <Toolbar style={{ justifyContent:'center'}} >
                         <Typography 
-                                variant='h5' 
+                                variant='h2' 
                                 component='h2' 
                                 color='textPrimary' 
                                 gutterBottom
                                 className={classes.container}
                             >
-                                {'All images'}
+                                {'SmartTUBE'}
                         </Typography>
                     </Toolbar>
-                    <Grid container spacing ={2}>
-                        {users.map(user => (
-                            <Grid item key={user.id} xs={12}>
-                                <MediaCard user={user}></MediaCard>
-                            </Grid>
-                            ))  
-                        }       
-                    </Grid>                             
+                    <SmartCarousel images = {images} />                             
                 </Container>
             }
             <GetErrorDialog openErrorDialog={openErrorDialog} error={error} errorCode={errorCode}/>

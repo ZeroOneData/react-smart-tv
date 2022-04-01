@@ -21,6 +21,13 @@ import ImageList from './images/ImageList';
 import { Link } from 'react-router-dom';
 import ROOT_URL from './utilities/ROOT_URL';
 import GetErrorDialog from './utilities/Dialogs/GetErrorDialog';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import { Button, ListSubheader, Switch } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import {  ThemeProvider } from '@material-ui/core';
+import { createTheme } from '@material-ui/core/styles'
+import HomeIcon from '@material-ui/icons/Home';
+import CategoryIcon from '@material-ui/icons/Category';
 
 const drawerWidth = 240;
 
@@ -42,6 +49,9 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
+  appBarHeader: {
+    flexGrow: 1,
+  },
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -54,6 +64,14 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
+    background: '#F5F5F1'
+  },
+  // necessary for content to be below app bar
+  toolbar: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
+    backgroundColor: 'theme.palette.background.default',
+    padding: theme.spacing(3),
   },
   drawerHeader: {
     display: 'flex',
@@ -87,12 +105,32 @@ export default function Layout(props) {
   const [errorCode, setErrorCode] = useState(null);
   const [isLoading, setIsLoading] = useState(true)
   const [openErrorDialog, setOpenErrorDialog] = useState(false);
+  const history = useHistory();
+  const [darkMode, setDarkMode] = useState(false);
+  const paletteType = darkMode ? 'dark' : 'light';
+
+  const theme = createTheme({
+    palette: {
+      mode: paletteType,
+      background: {
+        default: paletteType === 'light' ? '#eaeaea' : '#221F1F'
+      },
+      primary: {
+        main: '#E50914',
+        contrastText: 'white',
+      },
+      secondary: {
+        main: '#221f1f',
+        contrastText: 'white',
+      }
+    }
+  })
+ function handleThemeChange () {
+    setDarkMode(!darkMode)
+  }
 
   useEffect(() => {
     fetch(`${ROOT_URL}?client_id=KxMic2uEvSGnv4rBlsrycR1nO7IgMERswZ4eGq1s6f0`, {
-        // headers: {
-        //     'Authorization': 'JWT ' + localStorage.getItem('access_token')
-        //   }
         }
     )
     .then(res => {
@@ -118,7 +156,7 @@ export default function Layout(props) {
   }, [])
 
   const classes = useStyles();
-  const theme = useTheme();
+  // const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
@@ -129,9 +167,13 @@ export default function Layout(props) {
     setOpen(false);
   };
 
+  const handleRedirect = () => {
+    history.push('/')
+  };
+
   return (
-    
-    <div className={classes.root}>
+    <ThemeProvider theme = {theme}>
+      <div className={classes.root}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -149,9 +191,15 @@ export default function Layout(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            Smart TV app
+          <Typography variant="h6" noWrap style={{flexGrow:1}}>
+            SpanTube
           </Typography>
+          <div style={{display: 'flex', alignItems: 'center'}}>
+            <Typography variant="subtitle2" noWrap style={{flexGrow:1}}>
+              dark mode
+            </Typography>
+            <Switch checked={darkMode}  onChange={handleThemeChange} />
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -164,40 +212,33 @@ export default function Layout(props) {
         }}
       >
         <div className={classes.drawerHeader}>
+        <Typography component={Button} onClick={handleRedirect} button variant="h6" color= 'primary' className={classes.appBarHeader} style={{display: 'flex', alignItems: 'center', justifyContent:'center', padding: 20}}>
+            {/* <ArrowBackIosIcon style={{marginRight: 10}}/> */}
+            <HomeIcon fontize='large'  color='secondary'/>
+          </Typography>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </div>
         <Divider />
         <List>
+          <ListSubheader>
+            <CategoryIcon style ={{marginRight:10}}/>
+              Topics
+          </ListSubheader>
           {topics.map((topic) => (
             <ListItem
               component ={Link} 
               to={`/images/${topic.slug}`}
-              // to={{
-              //     pathname: '/images',
-              //     state: {
-              //         topicInstance: 'animals'
-              //     },
-              // }} 
               button
               key={topic.id}
             >
-              {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
-            <ListItemText primary={topic.slug} />
+            <ListItemText color='white' inset primary={topic.slug} />
           </ListItem>
           ))  
           }
         </List>
         <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
       </Drawer>
       <main
         className={clsx(classes.content, {
@@ -206,31 +247,10 @@ export default function Layout(props) {
       >
         <div className={classes.drawerHeader} />
         {props.children}
-        {/* <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-          facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-          gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-          donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-          adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-          Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-          imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-          arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-          donec massa sapien faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-          facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-          tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-          consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
-          vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In
-          hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et
-          tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin
-          nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
-          accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography> */}
       </main>
       <GetErrorDialog openErrorDialog={openErrorDialog} error={error} errorCode={errorCode}/>
     </div>
+    </ThemeProvider>
+    
   );
 }
