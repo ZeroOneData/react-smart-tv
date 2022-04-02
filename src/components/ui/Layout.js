@@ -24,7 +24,7 @@ import { createTheme } from '@material-ui/core/styles'
 import HomeIcon from '@material-ui/icons/Home'
 import CategoryIcon from '@material-ui/icons/Category'
 import LiveTvIcon from '@material-ui/icons/LiveTv'
-import CircularIndeterminate from '../utilities/CircularInIndeterminate'
+import CircularIndeterminate from './CircularInIndeterminate'
 import useFetch from '../utilities/customHooks/useFetch'
 import ApiKey from '../utilities/auth/ApiKey'
 

@@ -1,7 +1,7 @@
 import { Typography, Toolbar } from '@material-ui/core'
 import Container from '@material-ui/core/Container'
 import React from 'react'
-import CircularIndeterminate from '../../utilities/CircularInIndeterminate'
+import CircularIndeterminate from '../../ui/CircularInIndeterminate'
 import GetErrorDialog from '../../ui/Dialogs/GetErrorDialog'
 import SmartCarousel from '../../ui/SmartCarousel'
 import LiveTvIcon from '@material-ui/icons/LiveTv'
