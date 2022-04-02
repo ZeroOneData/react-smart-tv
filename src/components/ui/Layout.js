@@ -16,7 +16,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import { Link } from 'react-router-dom'
 import ROOT_URL from '../utilities/ROOT_URL'
-import GetErrorDialog from '../utilities/Dialogs/GetErrorDialog'
+import GetErrorDialog from './Dialogs/GetErrorDialog'
 import { Button, ListSubheader, Switch } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import {  ThemeProvider } from '@material-ui/core'
@@ -70,11 +70,6 @@ const useStyles = makeStyles((theme) => ({
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
-  // content: {
-  //   flexGrow: 1,
-  //   backgroundColor: 'theme.palette.background.default',
-  //   padding: theme.spacing(3),
-  // },
   drawerHeader: {
     display: 'flex',
     alignItems: 'center',

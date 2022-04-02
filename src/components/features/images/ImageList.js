@@ -1,7 +1,7 @@
 import { Typography, Toolbar} from '@material-ui/core'
 import Container from '@material-ui/core/Container'
 import CircularIndeterminate from '../../utilities/CircularInIndeterminate'
-import GetErrorDialog from '../../utilities/Dialogs/GetErrorDialog'
+import GetErrorDialog from '../../ui/Dialogs/GetErrorDialog'
 import ROOT_URL from '../../utilities/ROOT_URL'
 import { useParams } from 'react-router-dom'
 import SmartCarousel from '../../ui/SmartCarousel'
