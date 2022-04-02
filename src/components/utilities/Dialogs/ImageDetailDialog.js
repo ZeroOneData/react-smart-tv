@@ -1,4 +1,5 @@
-import { Container, Dialog, DialogContent, makeStyles, Typography } from "@material-ui/core";
+import { Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, makeStyles, Typography } from "@material-ui/core";
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles(() => ({
     divInner: {
@@ -14,30 +15,34 @@ const useStyles = makeStyles(() => ({
         placeItems: 'center',
         textAlign: 'justify',
         textAlignLast: 'center',
-    }
-}));
+    },
+}))
 
 const ImageDetailDialog = ({openImageDialog, image, handleClose}) => {
     const classes = useStyles() 
 
     return(
-        <Dialog
-            open={openImageDialog}
-            onClose={handleClose}
-        >
+        <Dialog open={openImageDialog} onClose={handleClose} >
+            <Container style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                    <Typography variant='h6' component='div' style={{}}>
+                        {image.description}
+                    <IconButton
+                    aria-label="close"
+                    onClick={handleClose}
+                    >
+                <CloseIcon />
+                </IconButton>
+                    </Typography>
+            </Container>
+            
             <DialogContent>
                 <Container
                 className={classes.divInner}
                 style={{backgroundImage: `url(${image.urls.regular})` }} >
-                    {/* <img src={image}></img> */}
-                    
-                    
                 </Container>
-                <Typography 
-                className={classes.typoInnerCenter} 
-                variant='subtitle1'>
+                <DialogContentText className={classes.typoInnerCenter}>
                     {`Photo credits go to: ${image.user.name}`}
-                </Typography>
+                </DialogContentText>
             </DialogContent>
         </Dialog>
     )

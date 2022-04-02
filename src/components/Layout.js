@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -13,21 +13,17 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import ImageList from './images/ImageList';
 import { Link } from 'react-router-dom';
 import ROOT_URL from './utilities/ROOT_URL';
 import GetErrorDialog from './utilities/Dialogs/GetErrorDialog';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { Button, ListSubheader, Switch } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import {  ThemeProvider } from '@material-ui/core';
 import { createTheme } from '@material-ui/core/styles'
 import HomeIcon from '@material-ui/icons/Home';
 import CategoryIcon from '@material-ui/icons/Category';
+import LiveTvIcon from '@material-ui/icons/LiveTv';
 
 const drawerWidth = 240;
 
@@ -51,6 +47,9 @@ const useStyles = makeStyles((theme) => ({
   },
   appBarHeader: {
     flexGrow: 1,
+    alignItems: 'center', 
+    justifyContent:'center', 
+    padding: 20
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -105,29 +104,12 @@ export default function Layout(props) {
   const [errorCode, setErrorCode] = useState(null);
   const [isLoading, setIsLoading] = useState(true)
   const [openErrorDialog, setOpenErrorDialog] = useState(false);
-  const history = useHistory();
   const [darkMode, setDarkMode] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const history = useHistory();
   const paletteType = darkMode ? 'dark' : 'light';
-
-  const theme = createTheme({
-    palette: {
-      mode: paletteType,
-      background: {
-        default: paletteType === 'light' ? '#eaeaea' : '#221F1F'
-      },
-      primary: {
-        main: '#E50914',
-        contrastText: 'white',
-      },
-      secondary: {
-        main: '#221f1f',
-        contrastText: 'white',
-      }
-    }
-  })
- function handleThemeChange () {
-    setDarkMode(!darkMode)
-  }
+  const classes = useStyles();
 
   useEffect(() => {
     fetch(`${ROOT_URL}?client_id=KxMic2uEvSGnv4rBlsrycR1nO7IgMERswZ4eGq1s6f0`, {
@@ -155,9 +137,29 @@ export default function Layout(props) {
     })
   }, [])
 
-  const classes = useStyles();
-  // const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const theme = createTheme({
+    palette: {
+      mode: paletteType,
+      background: {
+        default: paletteType === 'light' ? '#eaeaea' : '#221F1F'
+      },
+      primary: {
+        main: '#3c1053ff',
+        contrastText: 'white',
+      },
+      secondary: {
+        main: '#df6589ff',
+        contrastText: 'white',
+      }
+    }
+  })
+ const handleThemeChange = () => {
+    setDarkMode(!darkMode)
+  }
+
+  const handleListItemClick = (event,index) => {
+    setSelectedIndex(index);
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -168,78 +170,83 @@ export default function Layout(props) {
   };
 
   const handleRedirect = () => {
+    setSelectedIndex(-1);
     history.push('/')
-  };
+  }
 
   return (
     <ThemeProvider theme = {theme}>
       <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap style={{flexGrow:1}}>
-            SpanTube
-          </Typography>
-          <div style={{display: 'flex', alignItems: 'center'}}>
-            <Typography variant="subtitle2" noWrap style={{flexGrow:1}}>
-              dark mode
-            </Typography>
-            <Switch checked={darkMode}  onChange={handleThemeChange} />
-          </div>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-        <Typography component={Button} onClick={handleRedirect} button variant="h6" color= 'primary' className={classes.appBarHeader} style={{display: 'flex', alignItems: 'center', justifyContent:'center', padding: 20}}>
-            {/* <ArrowBackIosIcon style={{marginRight: 10}}/> */}
-            <HomeIcon fontize='large'  color='secondary'/>
-          </Typography>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          <ListSubheader>
-            <CategoryIcon style ={{marginRight:10}}/>
-              Topics
-          </ListSubheader>
-          {topics.map((topic) => (
-            <ListItem
-              component ={Link} 
-              to={`/images/${topic.slug}`}
-              button
-              key={topic.id}
+        <CssBaseline />
+        <AppBar
+          position="fixed"
+          className={clsx(classes.appBar, {
+            [classes.appBarShift]: open,
+          })}
+        >
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              className={clsx(classes.menuButton, open && classes.hide)}
             >
-            <ListItemText color='white' inset primary={topic.slug} />
-          </ListItem>
-          ))  
-          }
-        </List>
-        <Divider />
-      </Drawer>
+              <MenuIcon />
+            </IconButton>
+            <div style={{display: 'flex', flexGrow:1, alignItems: 'center'}}>
+              <Typography variant="h6" noWrap style={{marginRight: 10}} >
+                SmartTube
+              </Typography>
+              <LiveTvIcon />
+            </div>
+            <div style={{display: 'flex', alignItems: 'center'}}>
+              <Typography variant="subtitle2" noWrap style={{flexGrow:1}}>
+                dark mode
+              </Typography>
+              <Switch checked={darkMode}  onChange={handleThemeChange} />
+            </div>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          className={classes.drawer}
+          variant="persistent"
+          anchor="left"
+          open={open}
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+        >
+          <div className={classes.drawerHeader}>
+            <Typography component={Button} onClick={handleRedirect} color= 'primary' className={classes.appBarHeader}>
+              <HomeIcon fontize='large'  color='primary'/>
+            </Typography>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            <ListSubheader>
+              <CategoryIcon style ={{marginRight:10}}/>
+                Topics
+            </ListSubheader>
+            {topics.map((topic, index) => (
+              <ListItem
+                component ={Link} 
+                to={`/images/${topic.slug}`}
+                button
+                key={topic.id}
+                selected={selectedIndex === index}
+                onClick={(event) => handleListItemClick(event, index)}
+              >
+              <ListItemText color='white' inset primary={topic.slug} />
+            </ListItem>
+            ))  
+            }
+          </List>
+          <Divider />
+        </Drawer>
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: open,
