@@ -1,70 +1,40 @@
-# Getting Started with Create React App
+# Install and run application - guide
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- run: "git clone https://github.com/ZeroOneData/react-smart-tv.git" from your command line 
+- change into project directory [cd react-smart-tv]
+- run: "npm install"
+- run: "npm start"
 
-## Available Scripts
 
-In the project directory, you can run:
+## Welcome to the SmartTube application - Smart TV browsing 
 
-### `npm start`
+This project is a smart tv application that leverages ReactJs to deliver a state-of-the-art user experience as well as mind-bending performance.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+* 2 pages - Home and Topics - showcasing navigation, use of higher order components, use of history() object
+* a layout component wrapper
+* a persistent collapsabile sidedraw - each item in the drawer list is fetched dynamically from the UnSplash API and rendered dynacially into the drawer
+* a reusable Carousel component
+* data(images) are fetched dynamically from the Unsplash API and dynamically added into the carousel
+* clickable event tied to each individual image in the carousel- opening a dialog displaying the corresponding image instance along with the image title
+  and a shout-pout credits to the author of that particular photograph. - all this content creation is done dynamically
+* custom fetch hook useFetch() - this abstarcts the logic for fetching the data from the Unsplash api and makes it reuasable across the application
+* error handling feedback via stylish material ui
+* logic and accompanying ui components to deal with loading and initialization states
+* custom theming and color scheme
+* light and dark ui mode
+* crediting to photograph authors - as requested by Unsplash
 
-### `npm test`
+### `Features`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Reusable custom and imported react compnents
+state management across both child and parent components
+API interaction via HTTP requests and dealing with return data appropriately
+best practices and clean code
+use of react hooks 
+custom hooks
+react material ui
+styled-components
+Navigation
+Error handling
