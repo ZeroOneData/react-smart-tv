@@ -40,7 +40,7 @@ const ImageDetailDialog = ({ openImageDialog, image, handleClose }) => {
                     style={{backgroundImage: `url(${image.urls.regular})` }} >
                 </Container>
                 <DialogContentText className={classes.typoInnerCenter}>
-                    {`Photo credits go to: ${image.user.name}`}
+                    {`Photo credits: ${image.user.name}`}
                 </DialogContentText>
             </DialogContent>
         </Dialog>

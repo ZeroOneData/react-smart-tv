@@ -31,7 +31,16 @@ export default function Home(props) {
                             {'SmartTUBE'}
                             <LiveTvIcon fontSize='inherit' color='primary' style={{marginLeft:50}}/>
                         </Typography>
+
                     </Toolbar>
+                    <Typography 
+                            variant='h4' 
+                            component='h2' 
+                            color='textPrimary' 
+                            gutterBottom
+                        >
+                           {'~ Featured ~'}
+                        </Typography>
                     <SmartCarousel images = {images}/>                             
                 </Container>
             }
