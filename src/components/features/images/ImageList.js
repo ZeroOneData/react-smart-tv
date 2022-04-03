@@ -15,7 +15,7 @@ export default function ImageList(props) {
     const {slug} = useParams()
     
     const { data: images, error, errorCode, isLoading, openErrorDialog } = useFetch(
-        `${ROOT_URL}/topics/${slug}/photos?client_id=${ApiKey}`, slug)
+        `${ROOT_URL}/topics/${slug}/photos/?client_id=${ApiKey}`, slug)
     return (
         <Container>
             {isLoading ?

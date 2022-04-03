@@ -13,7 +13,7 @@ export default function Home(props) {
     document.title = props.pageName
     
     const { data: images, error, errorCode, isLoading, openErrorDialog } = useFetch(
-        `${ROOT_URL}/photos?client_id=${ApiKey}`)
+        `${ROOT_URL}/photos/?client_id=${ApiKey}`)
 
     return (
         <Container>

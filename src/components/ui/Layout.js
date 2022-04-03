@@ -104,7 +104,7 @@ export default function Layout(props) {
   const paletteType = darkMode ? 'dark' : 'light'
   const classes = useStyles()
   const { data: topics, error, errorCode, isLoading, openErrorDialog } = useFetch(
-    `${ROOT_URL}/topics?client_id=${ApiKey}`)
+    `${ROOT_URL}/topics/?client_id=${ApiKey}`)
 
   const theme = createTheme({
     palette: {
